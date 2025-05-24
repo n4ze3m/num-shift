@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-instrument: "Instrument Serif", serif;
+  --color-background: #fdfaf7;
+  --color-bColor: #e08163;
+}
+
+html,
+body {
+  @apply bg-background;
+}
