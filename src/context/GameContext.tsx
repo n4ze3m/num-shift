@@ -120,30 +120,30 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
   });
 
   // Update timer every minute
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const newTime = getTimeUntilNextDaily();
-      setTimeUntilNextDaily(newTime);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     const newTime = getTimeUntilNextDaily();
+  //     setTimeUntilNextDaily(newTime);
 
-      // Check if it's a new day
-      const today = dayjs().startOf("day").format("YYYY-MM-DD");
-      const lastCompletedDate = localStorage.getItem("dailyChallengeCompleted");
+  //     // Check if it's a new day
+  //     const today = dayjs().startOf("day").format("YYYY-MM-DD");
+  //     const lastCompletedDate = localStorage.getItem("dailyChallengeCompleted");
 
-      if (lastCompletedDate !== today) {
-        setDailyCompleted(false);
-        setCanPlayToday(true);
-        // Reset game for new day
-        const newGame = generateDailyPuzzle();
-        setGameState(newGame);
-        setCurrentNumber(newGame.baseNumber);
-        setMutationHistory([]);
-        setAttemptsRemaining(newGame.maxAttempts);
-        setIsComplete(false);
-      }
-    }, 60000); // Update every minute
+  //     if (lastCompletedDate !== today) {
+  //       setDailyCompleted(false);
+  //       setCanPlayToday(true);
+  //       // Reset game for new day
+  //       const newGame = generateDailyPuzzle();
+  //       setGameState(newGame);
+  //       setCurrentNumber(newGame.baseNumber);
+  //       setMutationHistory([]);
+  //       setAttemptsRemaining(newGame.maxAttempts);
+  //       setIsComplete(false);
+  //     }
+  //   }, 60000); // Update every minute
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   useEffect(() => {
     const newProgress = calculateProgress();
