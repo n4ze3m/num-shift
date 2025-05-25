@@ -86,7 +86,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const [isComplete, setIsComplete] = useState(false);
   const [dailyCompleted, setDailyCompleted] = useState(isDailyCompleted());
-  const [timeUntilNextDaily, setTimeUntilNextDaily] = useState(
+  const [timeUntilNextDaily,] = useState(
     getTimeUntilNextDaily()
   );
   const [canPlayToday, setCanPlayToday] = useState(!isDailyCompleted());
