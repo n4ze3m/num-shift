@@ -196,15 +196,16 @@ export class NumberGenerator {
         availableChoices[this.rng.nextInt(0, availableChoices.length - 1)];
       digits[position] = newDigit.toString();
       usedReplacementDigits.add(newDigit);
+      limitedMutationPool.push(oldDigit)
 
-      // Replace the used digit in the pool with the old one
-      const poolIndex = limitedMutationPool.indexOf(newDigit);
-      if (poolIndex !== -1) {
-        limitedMutationPool[poolIndex] = oldDigit;
-        this.log(
-          `  Updated mutation pool: replaced ${newDigit} with ${oldDigit}`
-        );
-      }
+      // // Replace the used digit in the pool with the old one
+      // const poolIndex = limitedMutationPool.indexOf(newDigit);
+      // if (poolIndex !== -1) {
+      //   limitedMutationPool[poolIndex] = oldDigit;
+      //   this.log(
+      //     `  Updated mutation pool: replaced ${newDigit} with ${oldDigit}`
+      //   );
+      // }
 
       this.log(
         `  Replace ${i + 1}: Position ${position} - ${oldDigit} → ${newDigit}`
@@ -410,7 +411,7 @@ export class NumberGenerator {
 
     const puzzle = {
       ...result,
-      mutationPool: limitedMutationPool.map((num) => num.toString()),
+      mutationPool: [...new Set(limitedMutationPool.map((num) => num.toString()))],
       seed: this.rng.seed,
     };
 
