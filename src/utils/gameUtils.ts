@@ -1,6 +1,9 @@
 import { FLIP_MAP, NumberGenerator } from "../lib/generator";
 import type { GameState, MutationType } from "../types/gameTypes";
 import dayjs from "dayjs";
+// enable utc
+import dayjsUtc from "dayjs/plugin/utc";
+dayjs.extend(dayjsUtc);
 
 export const seedRandom = (seed: string): (() => number) => {
   let s = Array.from(seed).reduce((a, b) => {
@@ -15,7 +18,7 @@ export const seedRandom = (seed: string): (() => number) => {
 };
 
 export const generateDailyPuzzle = (): GameState => {
-  const startOfDay = dayjs().startOf("day")
+  const startOfDay = dayjs().utc().startOf("day")
   const seed = startOfDay.unix()
   const generator = new NumberGenerator(seed);
   generator.setDebug(false);

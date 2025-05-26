@@ -50,8 +50,7 @@ export const HowToPlay: React.FC = () => {
                       Swap
                     </h3>
                     <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                      Exchange any two digits in the number. Perfect for
-                      repositioning digits that are in the wrong places.
+                      Exchange any two digits in the number. Select one digit, then click another to swap their positions. Perfect for repositioning digits that are in the wrong places.
                     </p>
                   </div>
                 </div>
@@ -67,9 +66,7 @@ export const HowToPlay: React.FC = () => {
                       Flip
                     </h3>
                     <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                      Flip a digit to its corresponding pair (e.g., 6→9, 1→7,
-                      3→8). Not all digits can be flipped - check what's
-                      available today!
+                      Flip a digit to its corresponding pair (e.g., 6→9, 1→7, 3→8, 0→8). Only certain digits can be flipped - digits that can be flipped will show a subtle indicator when you hover over them.
                     </p>
                   </div>
                 </div>
@@ -85,8 +82,7 @@ export const HowToPlay: React.FC = () => {
                       Shift
                     </h3>
                     <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                      Move a digit one position left or right. Great for
-                      fine-tuning digit positions.
+                      Move a digit one position left or right. Select a digit and choose which direction to shift it. Great for fine-tuning digit positions without affecting other numbers.
                     </p>
                   </div>
                 </div>
@@ -102,8 +98,7 @@ export const HowToPlay: React.FC = () => {
                       Replace
                     </h3>
                     <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                      Replace a digit with one from today's mutation pool. Check
-                      the available digits for replacement.
+                      Replace a digit with one from today's mutation pool. Click the Replace button to reveal the available digits for today's puzzle. The mutation pool is randomly generated daily and contains 3-5 different digits.
                     </p>
                   </div>
                 </div>
@@ -146,9 +141,17 @@ export const HowToPlay: React.FC = () => {
               <div className="flex items-start gap-2 sm:gap-3">
                 <div className="w-2 h-2 bg-bColor rounded-full mt-2 flex-shrink-0"></div>
                 <p className="text-sm sm:text-base text-gray-700">
+                  <span className="font-medium">Check available options:</span>{" "}
+                  Hover over digits to see if they can be flipped, and click the Replace button to reveal today's mutation pool before planning your moves.
+                </p>
+              </div>
+
+              <div className="flex items-start gap-2 sm:gap-3">
+                <div className="w-2 h-2 bg-bColor rounded-full mt-2 flex-shrink-0"></div>
+                <p className="text-sm sm:text-base text-gray-700">
                   <span className="font-medium">Use replace wisely:</span>{" "}
                   Sometimes it's more efficient to replace a digit than trying
-                  multiple swaps.
+                  multiple swaps or shifts.
                 </p>
               </div>
 
