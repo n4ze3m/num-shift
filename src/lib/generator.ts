@@ -1,11 +1,9 @@
 import { SeededRandom } from "./seed";
 
 export const FLIP_MAP: Record<string, string> = {
-  "0": "8",
-  "1": "7",
+  "2": "5",
+  "5": "2",
   "6": "9",
-  "8": "0",
-  "7": "1",
   "9": "6",
 };
 
@@ -92,8 +90,7 @@ export class NumberGenerator {
       const after = digits.join("");
 
       this.log(
-        `  Swap ${
-          i + 1
+        `  Swap ${i + 1
         }: Swapped positions ${pos1} and ${pos2} - ${before} → ${after}`
       );
     }
@@ -137,15 +134,13 @@ export class NumberGenerator {
       if (direction === 0) {
         current = current.slice(positions) + current.slice(0, positions);
         this.log(
-          `  Shift ${
-            i + 1
+          `  Shift ${i + 1
           }: Left shift by ${positions} positions - ${before} → ${current}`
         );
       } else {
         current = current.slice(-positions) + current.slice(0, -positions);
         this.log(
-          `  Shift ${
-            i + 1
+          `  Shift ${i + 1
           }: Right shift by ${positions} positions - ${before} → ${current}`
         );
       }
@@ -359,8 +354,7 @@ export class NumberGenerator {
       }
 
       this.log(
-        `Step ${i + 1} summary: ${before} → ${current} (${
-          operations[operations.length - 1]
+        `Step ${i + 1} summary: ${before} → ${current} (${operations[operations.length - 1]
         })`
       );
     }
