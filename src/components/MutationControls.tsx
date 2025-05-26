@@ -82,6 +82,7 @@ export const MutationControls: React.FC<MutationControlsProps> = ({
 
   return (
     <div className="space-y-6">
+     
       {/* Mutation Buttons */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {availableMutations.includes("swap") && (
@@ -98,6 +99,7 @@ export const MutationControls: React.FC<MutationControlsProps> = ({
               ${selectedDigit === null ? "opacity-50 cursor-not-allowed" : ""}
             `}
             disabled={selectedDigit === null}
+            title={selectedDigit === null ? "Select a digit first" : "Select another digit to swap with"}
           >
             <RefreshCw
               size={18}
@@ -129,9 +131,11 @@ export const MutationControls: React.FC<MutationControlsProps> = ({
               selectedDigit === null || !flipMap[currentNumber[selectedDigit]]
             }
             title={
-              selectedDigit !== null && !flipMap[currentNumber[selectedDigit]]
-                ? "This digit can't be flipped"
-                : "Flip the selected digit"
+              selectedDigit === null 
+                ? "Select a digit first"
+                : selectedDigit !== null && !flipMap[currentNumber[selectedDigit]]
+                ? `Digit ${currentNumber[selectedDigit]} cannot be flipped`
+                : `Flip ${currentNumber[selectedDigit]} to ${flipMap[currentNumber[selectedDigit]]}`
             }
           >
             <RotateCcw
@@ -139,6 +143,11 @@ export const MutationControls: React.FC<MutationControlsProps> = ({
               className="transition-transform group-hover:-rotate-90"
             />
             <span className="font-instrument">Flip</span>
+            {selectedDigit !== null && flipMap[currentNumber[selectedDigit]] && (
+              <span className="text-xs bg-white/20 px-2 py-1 rounded-full">
+                →{flipMap[currentNumber[selectedDigit]]}
+              </span>
+            )}
           </button>
         )}
 
@@ -156,6 +165,7 @@ export const MutationControls: React.FC<MutationControlsProps> = ({
               ${selectedDigit === null ? "opacity-50 cursor-not-allowed" : ""}
             `}
             disabled={selectedDigit === null}
+            title={selectedDigit === null ? "Select a digit first" : "Choose direction to shift the digit"}
           >
             <ArrowLeftRight
               size={18}
@@ -179,6 +189,7 @@ export const MutationControls: React.FC<MutationControlsProps> = ({
               ${selectedDigit === null ? "opacity-50 cursor-not-allowed" : ""}
             `}
             disabled={selectedDigit === null}
+            title={selectedDigit === null ? "Select a digit first" : "Replace with a digit from mutation pool"}
           >
             <Hash
               size={18}
@@ -197,8 +208,8 @@ export const MutationControls: React.FC<MutationControlsProps> = ({
             </h4>
             <p className="text-sm text-amber-700">
               Move digit{" "}
-              <span className="font-bold">{currentNumber[selectedDigit]}</span>{" "}
-              to a new position
+              <span className="font-bold bg-amber-100 px-2 py-1 rounded">{currentNumber[selectedDigit]}</span>{" "}
+              from position {selectedDigit + 1} to an adjacent position
             </p>
           </div>
           <div className="flex gap-4">
@@ -214,6 +225,7 @@ export const MutationControls: React.FC<MutationControlsProps> = ({
                     : "bg-white text-amber-700 hover:bg-amber-100 border-amber-300 hover:border-amber-400 hover:shadow-md"
                 }
               `}
+              title={selectedDigit === 0 ? "Cannot shift left from first position" : `Move to position ${selectedDigit}`}
             >
               ← Left
             </button>
@@ -229,6 +241,7 @@ export const MutationControls: React.FC<MutationControlsProps> = ({
                     : "bg-white text-amber-700 hover:bg-amber-100 border-amber-300 hover:border-amber-400 hover:shadow-md"
                 }
               `}
+              title={selectedDigit === currentNumber.length - 1 ? "Cannot shift right from last position" : `Move to position ${selectedDigit + 2}`}
             >
               Right →
             </button>
@@ -240,25 +253,33 @@ export const MutationControls: React.FC<MutationControlsProps> = ({
         <div className="bg-gradient-to-r from-indigo-50 to-indigo-50/50 border-2 border-indigo-200 rounded-2xl p-6">
           <div className="mb-4">
             <h4 className="font-instrument font-semibold text-indigo-800 mb-1">
-              Replace Digit
+              Replace Digit from Mutation Pool
             </h4>
             <p className="text-sm text-indigo-700">
               Replace{" "}
-              <span className="font-bold">{currentNumber[selectedDigit]}</span>{" "}
-              with one of these available digits
+              <span className="font-bold bg-indigo-100 px-2 py-1 rounded">{currentNumber[selectedDigit]}</span>{" "}
+              at position {selectedDigit + 1} with one of these available digits
             </p>
           </div>
           <div className="flex gap-3 flex-wrap">
-            {mutationPool.map((digit, index) => (
+            {mutationPool
+              .filter(digit => digit !== currentNumber[selectedDigit])
+              .map((digit, index) => (
               <button
                 key={`replace-${index}`}
                 onClick={() => handleReplaceWithDigit(digit)}
                 className="w-12 h-12 flex items-center justify-center bg-white text-indigo-700 hover:bg-indigo-100 rounded-2xl border-2 border-indigo-300 hover:border-indigo-400 font-bold text-lg transition-all duration-200 hover:shadow-md"
+                title={`Replace with ${digit}`}
               >
                 {digit}
               </button>
             ))}
           </div>
+          {mutationPool.filter(digit => digit !== currentNumber[selectedDigit]).length === 0 && (
+            <p className="text-sm text-indigo-600 italic">
+              No different digits available in today's mutation pool for replacement.
+            </p>
+          )}
         </div>
       )}
     </div>
