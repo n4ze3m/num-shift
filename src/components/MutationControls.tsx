@@ -200,6 +200,21 @@ export const MutationControls: React.FC<MutationControlsProps> = ({
         )}
       </div>
 
+      {selectedDigit !== null && activeMutation === "swap" && (
+        <div className="bg-gradient-to-r from-purple-50 to-purple-50/50 border-2 border-purple-200 rounded-2xl p-6">
+          <div className="mb-4">
+            <h4 className="font-instrument font-semibold text-purple-800 mb-1">
+              Swap Digits
+            </h4>
+            <p className="text-sm text-purple-700">
+              Click on the number you want to swap{" "}
+              <span className="font-bold bg-purple-100 px-2 py-1 rounded">{currentNumber[selectedDigit]}</span>{" "}
+              from position {selectedDigit + 1} with
+            </p>
+          </div>
+        </div>
+      )}
+
       {selectedDigit !== null && activeMutation === "shift" && (
         <div className="bg-gradient-to-r from-amber-50 to-amber-50/50 border-2 border-amber-200 rounded-2xl p-6">
           <div className="mb-4">

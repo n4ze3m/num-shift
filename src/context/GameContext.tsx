@@ -86,9 +86,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const [isComplete, setIsComplete] = useState(false);
   const [dailyCompleted, setDailyCompleted] = useState(isDailyCompleted());
-  const [timeUntilNextDaily,] = useState(
-    getTimeUntilNextDaily()
-  );
+  const [timeUntilNextDaily] = useState(getTimeUntilNextDaily());
   const [canPlayToday, setCanPlayToday] = useState(!isDailyCompleted());
 
   // Calculate progress based on digit matches
@@ -113,7 +111,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
     if (savedAttempts) {
       const parsed = JSON.parse(savedAttempts);
       if (parsed.date === today) {
-        return parsed.attempts;
+        return gameState.maxAttempts;
       }
     }
     return gameState.maxAttempts;
@@ -203,9 +201,16 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const performMutation = useCallback(
     (mutation: Mutation) => {
-      if (isComplete || attemptsRemaining <= 0 || !canPlayToday) return;
+      console.log("Performing mutation:", mutation, isComplete, attemptsRemaining, canPlayToday);
+      if (isComplete || attemptsRemaining <= 0 || !canPlayToday) {
+        console.log(
+          "Cannot perform mutation - game complete, no attempts remaining, or cannot play today"
+        );
+        return;
+      }
 
       let newNumber = currentNumber;
+      console.log("Current number:", currentNumber);
 
       switch (mutation.type) {
         case "swap":
@@ -214,6 +219,11 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
             const chars = newNumber.split("");
             [chars[pos1], chars[pos2]] = [chars[pos2], chars[pos1]];
             newNumber = chars.join("");
+            console.log("Performed swap mutation:", {
+              pos1,
+              pos2,
+              result: newNumber,
+            });
           }
           break;
         case "flip":
@@ -221,6 +231,11 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
             const chars = newNumber.split("");
             chars[mutation.position] = mutation.value;
             newNumber = chars.join("");
+            console.log("Performed flip mutation:", {
+              position: mutation.position,
+              value: mutation.value,
+              result: newNumber,
+            });
           }
           break;
         case "shift":
@@ -240,6 +255,11 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
               chars.splice(posToMove, 1);
               chars.splice(newPos, 0, digit);
               newNumber = chars.join("");
+              console.log("Performed shift mutation:", {
+                position: posToMove,
+                direction: mutation.direction,
+                result: newNumber,
+              });
             }
           }
           break;
@@ -248,34 +268,45 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
             const chars = newNumber.split("");
             chars[mutation.position] = mutation.value;
             newNumber = chars.join("");
+            console.log("Performed replace mutation:", {
+              position: mutation.position,
+              value: mutation.value,
+              result: newNumber,
+            });
           }
           break;
         default:
+          console.log("Unknown mutation type:", mutation.type);
           break;
       }
 
-      setMutationHistory((prev) => [
-        ...prev,
-        {
-          mutation,
-          before: currentNumber,
-          after: newNumber,
-        },
-      ]);
+      setMutationHistory((prev) => {
+        const newHistory = [
+          ...prev,
+          {
+            mutation,
+            before: currentNumber,
+            after: newNumber,
+          },
+        ];
+        console.log("Updated mutation history:", newHistory);
+        return newHistory;
+      });
 
       setCurrentNumber(newNumber);
-      //@ts-expect-error
-      setAttemptsRemaining((prev) => prev - 1);
+      setAttemptsRemaining((prev) => {
+        const newAttempts = prev - 1;
+        console.log("Attempts remaining:", newAttempts);
+        return newAttempts;
+      });
     },
     [currentNumber, isComplete, attemptsRemaining, canPlayToday]
   );
-
   const undoLastMove = useCallback(() => {
     if (mutationHistory.length > 0 && canPlayToday && !isComplete) {
       const lastMove = mutationHistory[mutationHistory.length - 1];
       setCurrentNumber(lastMove.before);
       setMutationHistory((prev) => prev.slice(0, -1));
-      //@ts-expect-error
       setAttemptsRemaining((prev) => prev + 1);
     }
   }, [mutationHistory, canPlayToday, isComplete]);
