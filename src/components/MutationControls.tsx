@@ -1,7 +1,7 @@
 import React from "react";
 import { useGame } from "../context/GameContext";
 import type { MutationType } from "../types/gameTypes";
-import { RefreshCw, ArrowLeftRight, RotateCcw, Hash, Plus } from "lucide-react";
+import { RefreshCw, ArrowLeftRight, RotateCcw, Hash, Triangle } from "lucide-react";
 
 interface MutationControlsProps {
   availableMutations: MutationType[];
@@ -247,7 +247,7 @@ export const MutationControls: React.FC<MutationControlsProps> = ({
                 : "Increment or decrement the digit by 1"
             }
           >
-            <Plus
+            <Triangle
               size={18}
               className="transition-transform group-hover:scale-110"
             />
