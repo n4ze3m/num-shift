@@ -201,7 +201,13 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const performMutation = useCallback(
     (mutation: Mutation) => {
-      console.log("Performing mutation:", mutation, isComplete, attemptsRemaining, canPlayToday);
+      console.log(
+        "Performing mutation:",
+        mutation,
+        isComplete,
+        attemptsRemaining,
+        canPlayToday
+      );
       if (isComplete || attemptsRemaining <= 0 || !canPlayToday) {
         console.log(
           "Cannot perform mutation - game complete, no attempts remaining, or cannot play today"
@@ -271,6 +277,32 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
             console.log("Performed replace mutation:", {
               position: mutation.position,
               value: mutation.value,
+              result: newNumber,
+            });
+          }
+          break;
+        case "bump":
+          if (
+            mutation.position !== undefined &&
+            mutation.direction !== undefined
+          ) {
+            const chars = newNumber.split("");
+            const currentDigit = parseInt(chars[mutation.position]);
+
+            let newDigit: number;
+            if (mutation.direction === "decrement") {
+              newDigit = currentDigit === 0 ? 9 : currentDigit - 1;
+            } else {
+              newDigit = currentDigit === 9 ? 0 : currentDigit + 1;
+            }
+
+            chars[mutation.position] = newDigit.toString();
+            newNumber = chars.join("");
+            console.log("Performed bump mutation:", {
+              position: mutation.position,
+              direction: mutation.direction,
+              from: currentDigit,
+              to: newDigit,
               result: newNumber,
             });
           }

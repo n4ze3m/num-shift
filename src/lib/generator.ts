@@ -307,6 +307,60 @@ export class NumberGenerator {
 
     return current;
   }
+  bumpOperation(number: string): string {
+    const digits = number.split("");
+    const numBumps = this.rng.nextInt(1, 2);
+
+    this.log(
+      `Bump operation: Starting with ${number}, performing ${numBumps} bumps`
+    );
+
+    for (let i = 0; i < numBumps; i++) {
+      // Find valid positions (digits that are not 0 or 9)
+      const validPositions = [];
+      for (let pos = 0; pos < digits.length; pos++) {
+        const digit = parseInt(digits[pos]);
+        if (digit !== 0 && digit !== 9) {
+          validPositions.push(pos);
+        }
+      }
+
+      // If no valid positions, skip this bump
+      if (validPositions.length === 0) {
+        this.log(`  Bump ${i + 1}: No valid positions (all digits are 0 or 9), skipping`);
+        continue;
+      }
+
+      const position = validPositions[this.rng.nextInt(0, validPositions.length - 1)];
+      const direction = this.rng.nextInt(0, 1); // 0 = decrement, 1 = increment
+      const currentDigit = parseInt(digits[position]);
+      const before = digits.join("");
+
+      let newDigit: number;
+      if (direction === 0) {
+        // Decrement (no wrap-around needed since we excluded 0)
+        newDigit = currentDigit - 1;
+        this.log(
+          `  Bump ${i + 1}: Decremented position ${position} from ${currentDigit} to ${newDigit}`
+        );
+      } else {
+        // Increment (no wrap-around needed since we excluded 9)
+        newDigit = currentDigit + 1;
+        this.log(
+          `  Bump ${i + 1}: Incremented position ${position} from ${currentDigit} to ${newDigit}`
+        );
+      }
+
+      digits[position] = newDigit.toString();
+      const after = digits.join("");
+
+      this.log(`    ${before} → ${after}`);
+    }
+
+    const result = digits.join("");
+    this.log(`Bump operation complete: ${number} → ${result}`);
+    return result;
+  }
 
   transformToBase(
     target: string,
@@ -340,9 +394,12 @@ export class NumberGenerator {
           operations.push("flip");
           break;
         case 2:
-          current = this.shiftOperation(current);
-          operations.push("shift");
+          current = this.bumpOperation(current); // Changed from shiftOperation
+          operations.push("bump")
           break;
+        // current = this.shiftOperation(current);
+        // operations.push("shift");
+        // break;
         case 3:
           current = this.replaceOperation(
             current,

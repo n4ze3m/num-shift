@@ -54,8 +54,9 @@ export const generateDailyPuzzle = (): GameState => {
     availableMutations: [
       "swap",
       "flip",
-      "shift",
+      // "shift",
       "replace",
+      "bump"
     ],
     lockedPositions: [],
     specialPatterns,
@@ -109,6 +110,8 @@ export const getMutationEmoji = (type: MutationType): string => {
       return "↔️";
     case "replace":
       return "🔢";
+    case "bump":
+      return "🔼";
     default:
       return "❓";
   }

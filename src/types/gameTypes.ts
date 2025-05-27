@@ -1,13 +1,13 @@
 // Game Types
 
-export type MutationType = 'swap' | 'flip' | 'shift' | 'replace';
+export type MutationType = 'swap' | 'flip' | 'shift' | 'replace' | 'bump';
 
 export interface Mutation {
   type: MutationType;
   positions?: number[];
   position?: number;
   value?: string;
-  direction?: 'left' | 'right';
+  direction?: 'left' | 'right' | "increment" | "decrement";
 }
 
 export interface MutationHistory {

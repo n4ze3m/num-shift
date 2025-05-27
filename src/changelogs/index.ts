@@ -1,6 +1,12 @@
 export const changelogContent = /*mdx*/`
 # Changelogs
 
+## Version 0.1.0
+*Released on 5/27/2025*
+
+- Implement "bump" mutation for number manipulations.
+- Removed "shift" mutation as it was redundant.
+
 
 ## Version 0.0.3
 *Released on 5/26/2025*

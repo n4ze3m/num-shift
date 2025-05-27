@@ -1,11 +1,11 @@
 import React from "react";
 import {
-  ArrowLeftRight,
   RefreshCw,
   RotateCcw,
   Hash,
   Target,
   Lightbulb,
+  Plus,
 } from "lucide-react";
 
 export const HowToPlay: React.FC = () => {
@@ -50,7 +50,9 @@ export const HowToPlay: React.FC = () => {
                       Swap
                     </h3>
                     <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                      Exchange any two digits in the number. Select one digit, then click another to swap their positions. Perfect for repositioning digits that are in the wrong places.
+                      Exchange any two digits in the number. Select one digit,
+                      then click another to swap their positions. Perfect for
+                      repositioning digits that are in the wrong places.
                     </p>
                   </div>
                 </div>
@@ -66,23 +68,27 @@ export const HowToPlay: React.FC = () => {
                       Flip
                     </h3>
                     <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                      Flip a digit to its corresponding pair (e.g., 6→9, 1→7, 3→8, 0→8). Only certain digits can be flipped - digits that can be flipped will show a subtle indicator when you hover over them.
+                      Flip a digit to its corresponding pair (e.g., 6→9, 1→7,
+                      3→8, 0→8). Only certain digits can be flipped - digits
+                      that can be flipped will show a subtle indicator when you
+                      hover over them.
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-amber-50 to-amber-25 border-2 border-amber-200 rounded-xl sm:rounded-2xl p-4 sm:p-6 hover:shadow-md transition-all duration-200">
+              <div className="bg-gradient-to-r from-emerald-50 to-emerald-25 border-2 border-emerald-200 rounded-xl sm:rounded-2xl p-4 sm:p-6 hover:shadow-md transition-all duration-200">
                 <div className="flex items-start gap-3 sm:gap-4">
-                  <div className="p-2 sm:p-3 bg-gradient-to-br from-amber-200 to-amber-100 text-amber-700 rounded-lg sm:rounded-xl shadow-sm">
-                    <ArrowLeftRight size={20} className="sm:w-6 sm:h-6" />
+                  <div className="p-2 sm:p-3 bg-gradient-to-br from-emerald-200 to-emerald-100 text-emerald-700 rounded-lg sm:rounded-xl shadow-sm">
+                    <Plus size={20} className="sm:w-6 sm:h-6" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-base sm:text-lg font-semibold text-amber-800 mb-1 sm:mb-2">
-                      Shift
+                    <h3 className="text-base sm:text-lg font-semibold text-emerald-800 mb-1 sm:mb-2">
+                      Bump
                     </h3>
                     <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                      Move a digit one position left or right. Select a digit and choose which direction to shift it. Great for fine-tuning digit positions without affecting other numbers.
+                      Increment or decrement a digit by 1. Select a digit and
+                      choose to increase (+1) or decrease (-1) its value. 
                     </p>
                   </div>
                 </div>
@@ -98,7 +104,10 @@ export const HowToPlay: React.FC = () => {
                       Replace
                     </h3>
                     <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                      Replace a digit with one from today's mutation pool. Click the Replace button to reveal the available digits for today's puzzle. The mutation pool is randomly generated daily and contains 3-5 different digits.
+                      Replace a digit with one from today's mutation pool. Click
+                      the Replace button to reveal the available digits for
+                      today's puzzle. The mutation pool is randomly generated
+                      daily and contains 3-5 different digits.
                     </p>
                   </div>
                 </div>
@@ -142,7 +151,9 @@ export const HowToPlay: React.FC = () => {
                 <div className="w-2 h-2 bg-bColor rounded-full mt-2 flex-shrink-0"></div>
                 <p className="text-sm sm:text-base text-gray-700">
                   <span className="font-medium">Check available options:</span>{" "}
-                  Hover over digits to see if they can be flipped, and click the Replace button to reveal today's mutation pool before planning your moves.
+                  Hover over digits to see if they can be flipped, and click the
+                  Replace button to reveal today's mutation pool before planning
+                  your moves.
                 </p>
               </div>
 
