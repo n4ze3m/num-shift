@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { formatShareText } from '../utils/gameUtils';
-import { Share2, Check, Copy, Clock } from 'lucide-react';
+import { Share2, Check, Copy, Clock,  } from 'lucide-react';
 import { useGame } from '../context/GameContext';
 
 interface ShareResultsProps {
@@ -16,7 +16,7 @@ export const ShareResults: React.FC<ShareResultsProps> = ({
 }) => {
   const [copied, setCopied] = useState(false);
   const [shareAttempted, setShareAttempted] = useState(false);
-  const { timeUntilNextDaily, canPlayToday } = useGame();
+  const { timeUntilNextDaily, canPlayToday, hasLabAccess } = useGame();
   
   const shareText = formatShareText(history, baseNumber, targetNumber, history.length);
   
@@ -61,6 +61,8 @@ export const ShareResults: React.FC<ShareResultsProps> = ({
           </p>
         </div>
       </div>
+
+   
       
       {/* Next Challenge Timer */}
       {!canPlayToday && (
@@ -144,7 +146,9 @@ export const ShareResults: React.FC<ShareResultsProps> = ({
         <p className="text-xs sm:text-sm text-green-600/80 text-center font-medium">
           {canPlayToday ? 
             "Challenge your friends with Daily Num Shift!" : 
-            "Daily challenge completed! See you tomorrow! 🌅"
+            hasLabAccess ? 
+              "Daily challenge completed! Try the Endless Lab for more fun! 🧪" :
+              "Daily challenge completed! See you tomorrow! 🌅"
           }
         </p>
       </div>

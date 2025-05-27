@@ -10,6 +10,8 @@ import {
   isDailyCompleted,
   markDailyCompleted,
   getTimeUntilNextDaily,
+  hasLabAccess,
+  grantLabAccess,
 } from "../utils/gameUtils";
 import type { Mutation, GameState, MutationHistory } from "../types/gameTypes";
 import dayjs from "dayjs";
@@ -27,6 +29,7 @@ interface GameContextType {
   isDailyCompleted: boolean;
   timeUntilNextDaily: string;
   canPlayToday: boolean;
+  hasLabAccess: boolean;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -88,6 +91,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
   const [dailyCompleted, setDailyCompleted] = useState(isDailyCompleted());
   const [timeUntilNextDaily] = useState(getTimeUntilNextDaily());
   const [canPlayToday, setCanPlayToday] = useState(!isDailyCompleted());
+  const [labAccess, setLabAccess] = useState(hasLabAccess());
 
   // Calculate progress based on digit matches
   const calculateProgress = useCallback(() => {
@@ -117,43 +121,23 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
     return gameState.maxAttempts;
   });
 
-  // Update timer every minute
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     const newTime = getTimeUntilNextDaily();
-  //     setTimeUntilNextDaily(newTime);
-
-  //     // Check if it's a new day
-  //     const today = dayjs().startOf("day").format("YYYY-MM-DD");
-  //     const lastCompletedDate = localStorage.getItem("dailyChallengeCompleted");
-
-  //     if (lastCompletedDate !== today) {
-  //       setDailyCompleted(false);
-  //       setCanPlayToday(true);
-  //       // Reset game for new day
-  //       const newGame = generateDailyPuzzle();
-  //       setGameState(newGame);
-  //       setCurrentNumber(newGame.baseNumber);
-  //       setMutationHistory([]);
-  //       setAttemptsRemaining(newGame.maxAttempts);
-  //       setIsComplete(false);
-  //     }
-  //   }, 60000); // Update every minute
-
-  //   return () => clearInterval(interval);
-  // }, []);
-
   useEffect(() => {
     const newProgress = calculateProgress();
     setProgress(newProgress);
     const gameComplete = currentNumber === gameState.targetNumber;
     setIsComplete(gameComplete);
 
-    // If game is completed, mark daily as completed
+    // If game is completed, mark daily as completed and grant lab access
     if (gameComplete && !dailyCompleted) {
       markDailyCompleted();
       setDailyCompleted(true);
       setCanPlayToday(false);
+
+      // Grant lab access when daily is completed
+      if (!labAccess) {
+        grantLabAccess();
+        setLabAccess(true);
+      }
     }
 
     // Save state to localStorage
@@ -197,6 +181,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
     mutationHistory,
     attemptsRemaining,
     dailyCompleted,
+    labAccess,
   ]);
 
   const performMutation = useCallback(
@@ -334,6 +319,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
     },
     [currentNumber, isComplete, attemptsRemaining, canPlayToday]
   );
+
   const undoLastMove = useCallback(() => {
     if (mutationHistory.length > 0 && canPlayToday && !isComplete) {
       const lastMove = mutationHistory[mutationHistory.length - 1];
@@ -379,6 +365,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
         isDailyCompleted: dailyCompleted,
         timeUntilNextDaily,
         canPlayToday,
+        hasLabAccess: isComplete,
       }}
     >
       {children}

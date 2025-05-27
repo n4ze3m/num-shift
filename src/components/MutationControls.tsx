@@ -1,7 +1,12 @@
-import React from "react";
-import { useGame } from "../context/GameContext";
-import type { MutationType } from "../types/gameTypes";
-import { RefreshCw, ArrowLeftRight, RotateCcw, Hash, Triangle } from "lucide-react";
+import React from "react"; 
+import type { Mutation, MutationType } from "../types/gameTypes";
+import {
+  RefreshCw,
+  ArrowLeftRight,
+  RotateCcw,
+  Hash,
+  Triangle,
+} from "lucide-react";
 
 interface MutationControlsProps {
   availableMutations: MutationType[];
@@ -11,6 +16,8 @@ interface MutationControlsProps {
   setSelectedDigit: (index: number | null) => void;
   activeMutation: string | null;
   setActiveMutation: (type: string | null) => void;
+  currentNumber: string;
+  performMutation: (mutation: Mutation) => void;
 }
 
 export const MutationControls: React.FC<MutationControlsProps> = ({
@@ -21,9 +28,9 @@ export const MutationControls: React.FC<MutationControlsProps> = ({
   setSelectedDigit,
   activeMutation,
   setActiveMutation,
+  currentNumber,
+  performMutation,
 }) => {
-  const { currentNumber, performMutation } = useGame();
-
   const handleMutationClick = (type: MutationType) => {
     if (selectedDigit === null) return;
 

@@ -431,7 +431,7 @@ export class NumberGenerator {
   }
 
   generateLimitedMutationPool(): number[] {
-    const poolSize = this.rng.nextInt(3, 5);
+    const poolSize = this.rng.nextInt(1, 2);
     const selectedNumbers = new Set<number>();
 
     this.log(`Generating mutation pool of size ${poolSize}`);

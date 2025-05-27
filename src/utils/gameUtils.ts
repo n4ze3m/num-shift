@@ -133,3 +133,16 @@ export const formatShareText = (
 
   return `Daily Num Shift (${today})\n${baseNumber} → ${targetNumber}\nSolved in ${moves} moves\n${emojiPath}`;
 };
+
+
+export const hasLabAccess = (): boolean => {
+  return localStorage.getItem("labAccess") === "true";
+};
+
+export const grantLabAccess = (): void => {
+  localStorage.setItem("labAccess", "true");
+};
+
+export const revokeLabAccess = (): void => {
+  localStorage.removeItem("labAccess");
+};

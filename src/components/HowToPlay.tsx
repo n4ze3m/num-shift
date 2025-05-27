@@ -5,7 +5,7 @@ import {
   Hash,
   Target,
   Lightbulb,
-  Plus,
+  Triangle,
 } from "lucide-react";
 
 export const HowToPlay: React.FC = () => {
@@ -68,8 +68,7 @@ export const HowToPlay: React.FC = () => {
                       Flip
                     </h3>
                     <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                      Flip a digit to its corresponding pair (e.g., 6→9, 1→7,
-                      3→8, 0→8). Only certain digits can be flipped - digits
+                      Flip a digit to its corresponding pair (e.g., 6→9, 2→5). Only certain digits can be flipped - digits
                       that can be flipped will show a subtle indicator when you
                       hover over them.
                     </p>
@@ -80,7 +79,7 @@ export const HowToPlay: React.FC = () => {
               <div className="bg-gradient-to-r from-emerald-50 to-emerald-25 border-2 border-emerald-200 rounded-xl sm:rounded-2xl p-4 sm:p-6 hover:shadow-md transition-all duration-200">
                 <div className="flex items-start gap-3 sm:gap-4">
                   <div className="p-2 sm:p-3 bg-gradient-to-br from-emerald-200 to-emerald-100 text-emerald-700 rounded-lg sm:rounded-xl shadow-sm">
-                    <Plus size={20} className="sm:w-6 sm:h-6" />
+                    <Triangle size={20} className="sm:w-6 sm:h-6" />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-base sm:text-lg font-semibold text-emerald-800 mb-1 sm:mb-2">
