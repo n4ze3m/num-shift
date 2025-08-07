@@ -11,6 +11,8 @@
   --color-bColor: #e08163;
 }
 
+
+
 html,
 body {
   @apply bg-background;

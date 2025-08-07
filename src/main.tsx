@@ -1,17 +1,14 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { ConvexProvider, ConvexReactClient } from "convex/react";
+import App from "./App.tsx";
 import "./index.css";
-import { RouterProvider } from "react-router";
-import { router } from "./routes";
-import { GameProvider } from "./context/GameContext";
-import { LabProvider } from "./context/LabContext";
 
+const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL);
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <GameProvider>
-      <LabProvider>
-        <RouterProvider router={router} />
-      </LabProvider>
-    </GameProvider>
-  </StrictMode>
+    <StrictMode>
+        <ConvexProvider client={convex}>
+            <App />
+        </ConvexProvider>
+    </StrictMode>
 );

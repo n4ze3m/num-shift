@@ -1,0 +1,5 @@
+{
+  "functions": "./",
+  "schema": "./schema.ts",
+  "deployment": "https://robust-ferret-982.convex.cloud"
+}
